@@ -6,6 +6,7 @@
 
 > *매일같이 출조出釣 나가는 당신만의 물고기 도감*
 
+🏆삼성 청년 SW아카데미(SSAFY) 12th 특화 프로젝트 우수상🏆
 ㅤ  
 ## 😊개발자 소개
 <img src="/docs/asset/teams.png" width="600"/>
