@@ -6,7 +6,7 @@
 
 > *매일같이 출조出釣 나가는 당신만의 물고기 도감*
 
-🏆삼성 청년 SW아카데미(SSAFY) 12th 특화 프로젝트 우수상🏆
+🥇삼성 청년 SW아카데미(SSAFY) 12th 특화 프로젝트 우수상🥇
 ㅤ  
 ## 😊개발자 소개
 <img src="/docs/asset/teams.png" width="600"/>
@@ -65,6 +65,75 @@
 ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
 ![GitLab](https://img.shields.io/badge/gitlab-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white)
 ![Google Drive](https://img.shields.io/badge/Google%20Drive-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)
+
+---
+
+💻 1. 기여한 부분
+⭐ 1) 수족관 메인 UI 및 인터랙션 구현
+유저 정보, 수족관 가치, "더 많은.." 메뉴 등 상단 UI 구현
+
+"더 많은.." 탭 클릭 시 애니메이션 메뉴 등장 (AnimationController, FadeTransition, SlideTransition 활용)
+
+하단에서 물고기 선택 모달창이 자연스럽게 올라오도록 showModalBottomSheet 추가
+
+⭐ 2) 물고기 애니메이션 로직 설계
+FallingFish 클래스와 SwimmingFish 클래스를 설계해 물고기 낙하 ➝ 수영 상태 전환 처리
+
+물고기가 떨어질 때 감속 애니메이션을 통해 현실적인 낙하 구현
+
+Tween, Timer, progress 기반 속도 조절 등으로 애니메이션 정교화
+
+⭐ 3) 물고기 수영 로직: 8방향 랜덤 이동 구현
+물고기 낙하 후 수영 시작 시, 이동 방향을 상/하/좌/우/좌상/좌하/우상/우하(↗↘↙↖) 중 하나로 랜덤 지정
+
+각 물고기마다 이동 시간(0~2초)과 멈춤 시간(2~5초)을 랜덤하게 계산해 자연스러운 수영 패턴 구현
+
+각 방향별 (dx, dy) 벡터 계산 → 좌표 갱신
+
+멈춤 상태에서도 Timer로 일정 시간 이후 자동 재이동되도록 로직 구성
+
+다수의 물고기를 동시에 관리하기 위해 SwimmingFish 객체에 개별 상태(dx, dy, isPaused, pauseTimer, moveTimer) 포함
+
+좌우 벽 충돌 시 방향 전환
+
+⭐ 4) 물고기 추가 모달 기능 구현
+사용자 맞춤형 모달 디자인 구현
+
+핸들바(ㅡ) 추가하여 인터렉션이 가능하다는 직관적인 표현추가
+
+Wrap UI로 다양한 물고기 선택 가능
+
+선택 시 낙하 애니메이션 자동 실행
+
+⭐ 5) 전체 애니메이션 통합 및 화면 구성
+IndexedStack과 상태 관리로 하단 네비게이션 연동
+
+수족관 페이지, 도감 페이지, 카메라 페이지 간 전환 흐름 설계
+
+---
+
+⚽ 2. 트러블슈팅 경험
+❌문제 1: 물고기 낙하 후 이미지가 2개 보이는 이슈
+
+상황 : 물고기 선택 후 낙하하면, 중앙에 낙하된 물고기와 헤엄치는 물고기 둘 다 보여서 중복 표시됨
+
+해결: fish.top <= targetY - 2 조건을 추가하여 착수 시점 정확히 판별하고, fallingFishes에서 제거한 뒤 swimmingFishes에만 추가되도록 처리
+
+❌ 문제 2: 낙하 속도 일정해서 어색함
+
+해결: progress 값을 이용해 감속 구현 — currentSpeed = baseSpeed * (1 - progress)
+
+물고기가 초반에 빠르게, 끝에서는 느리게 착수하게 함
+
+❌ 문제 3: 모달창 크기가 작아서 몰입감 부족
+
+해결: MediaQuery.of(context).size.width와 isScrollControlled: true 설정으로 모달을 양쪽에 꽉 차게 변경
+
+상단에 Container(width: 40, height: 5) 추가하여 사용자가 "드래그 가능한 모달"로 인식하게끔 개선
+
+---
+
+회 go 
 
 ---
 
